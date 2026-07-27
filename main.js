@@ -512,7 +512,7 @@ var MdFormatterSettingTab = class extends import_obsidian.PluginSettingTab {
       })
     );
     containerEl.createEl("hr");
-    containerEl.createEl("h3", { text: "\u6279\u91CF\u5904\u7406" });
+    new import_obsidian.Setting(containerEl).setName("\u6279\u91CF\u5904\u7406").setHeading();
     new import_obsidian.Setting(containerEl).setName("\u7F8E\u5316\u5F53\u524D\u6587\u4EF6\u5939\u4E0B\u6240\u6709 Markdown \u6587\u4EF6").setDesc("\u4EE5\u5F53\u524D\u6253\u5F00\u6587\u4EF6\u6240\u5728\u76EE\u5F55\u4E3A\u51C6").addButton(
       (btn) => btn.setButtonText("\u5F00\u59CB\u6279\u91CF\u7F8E\u5316").onClick(() => {
         this.plugin.formatAllInFolder().catch((e) => {

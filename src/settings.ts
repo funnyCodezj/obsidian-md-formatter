@@ -62,7 +62,7 @@ export class MdFormatterSettingTab extends PluginSettingTab {
       );
 
     containerEl.createEl('hr');
-    containerEl.createEl('h3', { text: '批量处理' });
+    new Setting(containerEl).setName('批量处理').setHeading();
     new Setting(containerEl)
       .setName('美化当前文件夹下所有 Markdown 文件')
       .setDesc('以当前打开文件所在目录为准')
