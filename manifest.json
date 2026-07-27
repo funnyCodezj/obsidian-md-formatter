@@ -1,10 +1,10 @@
 {
   "id": "md-formatter",
   "name": "MD Formatter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minAppVersion": "0.15.0",
   "description": "One-click Markdown formatting with customizable rules.",
-  "author": "Your Name",
-  "authorUrl": "https://github.com/yourusername/obsidian-md-formatter",
+  "author": "funnyCodezj",
+  "authorUrl": "https://github.com/funnyCodezj/obsidian-md-formatter",
   "isDesktopOnly": false
 }
