@@ -467,14 +467,28 @@ var MdFormatterSettingTab = class extends import_obsidian.PluginSettingTab {
     super(app, plugin);
     this.plugin = plugin;
   }
+  getSettingDefinitions() {
+    return [
+      {
+        key: "rules",
+        name: "\u6392\u7248\u89C4\u5219 (YAML)",
+        description: "\u81EA\u5B9A\u4E49 Markdown \u6392\u7248\u7F8E\u5316\u89C4\u5219\uFF0C\u4F7F\u7528 YAML \u683C\u5F0F\u7F16\u5199"
+      },
+      {
+        key: "batch",
+        name: "\u6279\u91CF\u7F8E\u5316",
+        description: "\u7F8E\u5316\u5F53\u524D\u6587\u4EF6\u5939\u4E0B\u6240\u6709 Markdown \u6587\u4EF6"
+      }
+    ];
+  }
   display() {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.createEl("h2", { text: "MD \u6392\u7248\u7F8E\u5316\u5668" });
+    new import_obsidian.Setting(containerEl).setName("MD \u6392\u7248\u7F8E\u5316\u5668").setHeading();
     containerEl.createEl("p", {
       text: '\u5728 Markdown \u7F16\u8F91\u5668\u4E2D\u53F3\u952E \u2192 "\u7F8E\u5316 Markdown \u6392\u7248"\uFF0C\u6216\u4F7F\u7528\u547D\u4EE4\u9762\u677F\u641C\u7D22"\u7F8E\u5316"\u3002'
     });
-    containerEl.createEl("h3", { text: "\u89C4\u5219\u6A21\u677F (YAML)" });
+    new import_obsidian.Setting(containerEl).setName("\u89C4\u5219\u6A21\u677F (YAML)").setHeading();
     const textarea = containerEl.createEl("textarea", {
       attr: {
         style: "width:100%; min-height:450px; font-family: var(--font-monospace); font-size: 13px; line-height: 1.5; resize: vertical;"
@@ -501,11 +515,13 @@ var MdFormatterSettingTab = class extends import_obsidian.PluginSettingTab {
     containerEl.createEl("h3", { text: "\u6279\u91CF\u5904\u7406" });
     new import_obsidian.Setting(containerEl).setName("\u7F8E\u5316\u5F53\u524D\u6587\u4EF6\u5939\u4E0B\u6240\u6709 Markdown \u6587\u4EF6").setDesc("\u4EE5\u5F53\u524D\u6253\u5F00\u6587\u4EF6\u6240\u5728\u76EE\u5F55\u4E3A\u51C6").addButton(
       (btn) => btn.setButtonText("\u5F00\u59CB\u6279\u91CF\u7F8E\u5316").onClick(() => {
-        this.plugin.formatAllInFolder();
+        this.plugin.formatAllInFolder().catch((e) => {
+          new import_obsidian.Notice("\u6279\u91CF\u7F8E\u5316\u51FA\u9519: " + e.message);
+        });
       })
     );
     containerEl.createEl("hr");
-    containerEl.createEl("h3", { text: "\u4F7F\u7528\u8BF4\u660E" });
+    new import_obsidian.Setting(containerEl).setName("\u4F7F\u7528\u8BF4\u660E").setHeading();
     const ul = containerEl.createEl("ul");
     ul.createEl("li", { text: '\u53F3\u952E\u83DC\u5355\uFF1A\u5728\u7F16\u8F91\u5668\u4EFB\u610F\u4F4D\u7F6E\u53F3\u952E \u2192 "\u7F8E\u5316 Markdown \u6392\u7248"' });
     ul.createEl("li", { text: '\u547D\u4EE4\u9762\u677F\uFF1ACtrl+P \u641C\u7D22"\u7F8E\u5316\u5F53\u524D MD \u6392\u7248"\u6216"\u7F8E\u5316\u5F53\u524D\u6587\u4EF6\u5939"' });
@@ -3677,7 +3693,9 @@ var MdFormatterPlugin = class extends import_obsidian2.Plugin {
     }
     this.settings.rules = rules;
     this.settings.rulesYaml = yamlText;
-    this.saveSettings();
+    this.saveSettings().catch((e) => {
+      console.error("\u4FDD\u5B58\u8BBE\u7F6E\u5931\u8D25:", e);
+    });
     this.engine = new FormatterEngine(rules);
   }
 };

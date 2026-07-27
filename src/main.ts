@@ -135,7 +135,9 @@ export default class MdFormatterPlugin extends Plugin {
 
     this.settings.rules = rules;
     this.settings.rulesYaml = yamlText;
-    this.saveSettings();
+    this.saveSettings().catch((e: unknown) => {
+      console.error('保存设置失败:', e);
+    });
     this.engine = new FormatterEngine(rules);
   }
 }
