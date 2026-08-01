@@ -33,7 +33,7 @@
 
 ### 安装
 
-**社区插件市场（待上架）**
+**社区插件市场**
 
 1. 打开 Obsidian 设置 → 第三方插件 → 浏览
 2. 搜索 "MD Formatter" → 安装 → 启用
@@ -102,7 +102,7 @@ One-click Markdown formatting for Obsidian with customizable YAML rules. Only fo
 
 ### Installation
 
-**Community Plugin (coming soon)**
+**Community Plugin**
 
 1. Settings → Community Plugins → Browse
 2. Search "MD Formatter" → Install → Enable
