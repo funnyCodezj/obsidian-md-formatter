@@ -237,7 +237,8 @@ export class FormatterEngine {
     const rules = this.rules;
     const result: AnyBlock[] = [];
 
-    for (let i = 0; i < blocks.length; i++) {
+    let i = 0;
+    while (i < blocks.length) {
       const block = blocks[i];
 
       switch (block.type) {
@@ -246,6 +247,7 @@ export class FormatterEngine {
           const level = Math.max(rules.heading.minLevel, Math.min(block.level, rules.heading.maxLevel));
           result.push({ ...block, level });
           this.ensureBlankAfter(result, rules.heading.blankAfter);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -253,6 +255,7 @@ export class FormatterEngine {
           this.ensureBlankBefore(result, rules.horizontalRule.blankAround);
           result.push({ ...block, marker: rules.horizontalRule.style.charAt(0) });
           this.ensureBlankAfter(result, rules.horizontalRule.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -263,6 +266,7 @@ export class FormatterEngine {
             lines: this.formatCodeBlock(block.lines),
           });
           this.ensureBlankAfter(result, rules.codeBlock.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -273,6 +277,7 @@ export class FormatterEngine {
             : block.lines;
           result.push({ ...block, lines });
           this.ensureBlankAfter(result, 1);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -283,6 +288,7 @@ export class FormatterEngine {
             lines: this.cleanBlockquote(block.lines),
           });
           this.ensureBlankAfter(result, rules.blockquote.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -293,6 +299,7 @@ export class FormatterEngine {
             lines: this.formatList(block.lines, block.ordered, rules),
           });
           this.ensureBlankAfter(result, 1);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -317,6 +324,7 @@ export class FormatterEngine {
         case 'frontMatter': {
           result.push(block);
           this.ensureBlankAfter(result, rules.frontMatter.blankAfter);
+          while (i + 1 < blocks.length && blocks[i + 1].type === 'blank') i++;
           break;
         }
 
@@ -324,6 +332,7 @@ export class FormatterEngine {
           result.push(block);
           break;
       }
+      i++;
     }
 
     return result;

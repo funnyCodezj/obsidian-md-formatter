@@ -253,7 +253,8 @@ var FormatterEngine = class {
   applyRules(blocks) {
     const rules = this.rules;
     const result = [];
-    for (let i = 0; i < blocks.length; i++) {
+    let i = 0;
+    while (i < blocks.length) {
       const block = blocks[i];
       switch (block.type) {
         case "heading": {
@@ -261,12 +262,14 @@ var FormatterEngine = class {
           const level = Math.max(rules.heading.minLevel, Math.min(block.level, rules.heading.maxLevel));
           result.push({ ...block, level });
           this.ensureBlankAfter(result, rules.heading.blankAfter);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "horizontalRule": {
           this.ensureBlankBefore(result, rules.horizontalRule.blankAround);
           result.push({ ...block, marker: rules.horizontalRule.style.charAt(0) });
           this.ensureBlankAfter(result, rules.horizontalRule.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "codeBlock": {
@@ -276,6 +279,7 @@ var FormatterEngine = class {
             lines: this.formatCodeBlock(block.lines)
           });
           this.ensureBlankAfter(result, rules.codeBlock.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "table": {
@@ -283,6 +287,7 @@ var FormatterEngine = class {
           const lines = rules.table.alignColumns ? this.alignTable(block.lines, rules.table.padding) : block.lines;
           result.push({ ...block, lines });
           this.ensureBlankAfter(result, 1);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "blockquote": {
@@ -292,6 +297,7 @@ var FormatterEngine = class {
             lines: this.cleanBlockquote(block.lines)
           });
           this.ensureBlankAfter(result, rules.blockquote.blankAround);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "list": {
@@ -301,6 +307,7 @@ var FormatterEngine = class {
             lines: this.formatList(block.lines, block.ordered, rules)
           });
           this.ensureBlankAfter(result, 1);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         case "paragraph": {
@@ -323,12 +330,14 @@ var FormatterEngine = class {
         case "frontMatter": {
           result.push(block);
           this.ensureBlankAfter(result, rules.frontMatter.blankAfter);
+          while (i + 1 < blocks.length && blocks[i + 1].type === "blank") i++;
           break;
         }
         default:
           result.push(block);
           break;
       }
+      i++;
     }
     return result;
   }
