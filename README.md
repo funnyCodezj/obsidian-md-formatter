@@ -18,6 +18,8 @@
 - **批量处理** — 一键美化整个文件夹下所有 `.md` 文件
 - **默认规则** — 开箱即用，覆盖标题、列表、代码块、表格、引用、分隔线、段落等
 
+> **反馈与建议** — 有任何问题、意见或建议，欢迎到 [GitHub Issues](https://github.com/funnyCodezj/obsidian-md-formatter/issues) 留言，帮助插件越做越好。
+
 ### 默认美化规则
 
 | 类别 | 规则 |
@@ -99,6 +101,8 @@ One-click Markdown formatting for Obsidian with customizable YAML rules. Only fo
 - **Custom Rules** — Editable YAML template for spacing, indentation, alignment, and more
 - **Batch Processing** — Format all `.md` files in a folder at once
 - **Sensible Defaults** — Covers headings, lists, code blocks, tables, quotes, horizontal rules, and paragraphs
+
+> **Feedback** — Questions, ideas, or suggestions? Leave a message on [GitHub Issues](https://github.com/funnyCodezj/obsidian-md-formatter/issues) — your input helps make this plugin better.
 
 ### Installation
 
